@@ -15,6 +15,9 @@ def preprocess(x):
 
 model = tf.keras.models.load_model('basic_model.h5')
 
+
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -25,7 +28,6 @@ def analysis():
         return render_template('analysisform.html')
     
     if request.method == 'POST':
-        # img = request.files.get('img','')
         img = request.files['img']
         path = "./static/" + img.filename
         img.save(path)
