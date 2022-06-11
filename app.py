@@ -3,17 +3,21 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
+import cv2
 
 app = Flask(__name__)
 
-def preprocess(x):
-    img = image.load_img(x, target_size=(32, 32, 3))
-    img = image.img_to_array(img)
-    img = preprocess_input(img)
-    img /= 255
-    return img
+def detect(model, image_path):
+    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    img = cv2.resize(img, (150, 150))
+    img = np.array(img).reshape(-1, 150, 150, 1)
+    img = img / 255.
+    img = np.array(img)
 
-model = tf.keras.models.load_model('basic_model.h5')
+    pred = model.predict([ img ])
+    return 1 if pred[0][0]>0.5 else 0
+
+model = tf.keras.models.load_model('pneumonia_detector.h5')
 
 
 
@@ -31,9 +35,10 @@ def analysis():
         img = request.files['img']
         path = "./static/" + img.filename
         img.save(path)
-        img = preprocess(path)
+
         ans_list = ["Normal", "Pneumonia"]
-        ans = np.argmax(model.predict(tf.expand_dims(img, axis=0)))
+        ans = detect(model, path)
+
         return render_template('analysisreport.html',ans=ans_list[ans])
 
 
