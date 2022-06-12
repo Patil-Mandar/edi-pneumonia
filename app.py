@@ -1,8 +1,8 @@
 from flask import Flask,render_template,request
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.imagenet_utils import preprocess_input
+from keras.preprocessing import image
+from keras.applications.imagenet_utils import preprocess_input
 import cv2
 
 app = Flask(__name__)
@@ -39,7 +39,7 @@ def analysis():
         ans_list = ["Normal", "Pneumonia"]
         ans = detect(model, path)
 
-        return render_template('analysisreport.html',ans=ans_list[ans])
+        return render_template('analysisform.html',ans=ans_list[ans], index=ans, path=path)
 
 
 @app.route('/aboutus')
@@ -49,3 +49,4 @@ def aboutus():
 
 if __name__ =='__main__':
 	app.run(debug = True)
+

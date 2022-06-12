@@ -4,14 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <script src="https://use.fontawesome.com/3a2eaf6206.js"></script>
+    <title>Pneumonia Detection</title>
 </head>
 <body>
 
-    <form action="/analysis" method="post" enctype="multipart/form-data">
-        <label for="img">Upload X-ray Image</label><br>
-        <input type="file" name="img" id="img" placeholder="X-Ray Image"><br>
-        <button>Analysis</button>
+    <h1 class="title">Pneumonia Detection Web App</h1>
+    <form class="card" action="/analysis" method="post" enctype="multipart/form-data">
+        <div class="input-image">
+        <label class="input-label" for="img">  Upload X-ray Image</label><br>        
+        <i class="fa fa-2x fa-camera" style="padding-top: 10px;"></i>
+        <input class="input-tag" type="file" name="img" id="img" placeholder="X-Ray Image"><br>
+        
+    </div>
+    <!-- <img src={{path}} alt="image"> -->
+    <button class="analysis-btn">Analysis</button>
+    
+    
+    <h1 class="title">{{ans}}</h1>
     </form>
+    
 </body>
 </html>
